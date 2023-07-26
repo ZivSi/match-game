@@ -12,31 +12,31 @@ class LengthError(Exception):
     pass
 
 
-def get_length_score(a: str, b: str):
+def get_length_score(a: str, b: str) -> float:
     return round(min(len(a), len(b)) / max(len(a), len(b)), 1)
 
 
-def get_letters_score(a: str, b: str):
-    score = 1
+def get_letters_score(a: str, b: str) -> float:
+    max_length = max(len(a), len(b))
+
+    matches = sum(c1 == c2 for c1, c2 in zip(a, b))
+
+    match_level = matches / max_length
+
+    return match_level
+
+
+def get_order_score(a, b) -> float:
+    score = 1.0
 
     for i in range(min(len(a), len(b))):
         if a[i] != b[i]:
-            score -= 1 / len(b)
+            score -= 1.0 / max(len(a), len(b))
 
-    return round(score, 1)
-
-
-def get_order_score(a, b):
-    score = 1
-
-    for i in range(min(len(a), len(b))):
-        if a[i] != b[i]:
-            score -= 1 / len(b)
-
-    return round(score, 1)
+    return round(score, 4)
 
 
-def compare_words(a: str, b: str):
+def compare_words(a: str, b: str) -> float:
     if len(a) < 1 or len(b) < 1:
         raise LengthError("Length cannot be less than 1")
 
