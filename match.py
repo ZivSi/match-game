@@ -17,11 +17,10 @@ def get_length_score(a: str, b: str):
 
 
 def get_letters_score(a: str, b: str):
-    score = 1  # Highest
+    score = 1
 
-    # b is the input
-    for letter in b:
-        if letter not in a:
+    for i in range(min(len(a), len(b))):
+        if a[i] != b[i]:
             score -= 1 / len(b)
 
     return round(score, 1)
